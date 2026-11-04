@@ -1,4 +1,4 @@
-export interface Game {
+export interface Videojuego {
  id: number;
  title: string;
  genre: string;

@@ -1,47 +1,47 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Game } from '../models/game';
+import { Videojuego } from '../models/game';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GamesService {
+export class CatalogoService {
 
-  private apiUrl = 'http://localhost:3000/games'
-  private http = inject(HttpClient)
+  private readonly urlApi = 'http://localhost:3000/games';
+  private readonly clienteHttp = inject(HttpClient);
 
-  getGames(page: number, limit: number, genre: string, platform: string): Observable<HttpResponse<Game[]>> {
-    let params = new HttpParams().set('_page', page).set('_limit', limit);
+  obtenerVideojuegos(pagina: number, limite: number, genero: string, plataforma: string): Observable<HttpResponse<Videojuego[]>> {
+    let parametros = new HttpParams().set('_page', pagina).set('_limit', limite);
 
-    if (genre) {
-      params = params.set('genre', genre);
+    if (genero) {
+      parametros = parametros.set('genre', genero);
     }
-    if (platform) {
-      params = params.set('platform', platform);
+    if (plataforma) {
+      parametros = parametros.set('platform', plataforma);
     }
 
-    return this.http.get<Game[]>(this.apiUrl, { params, observe: 'response' });
+    return this.clienteHttp.get<Videojuego[]>(this.urlApi, { params: parametros, observe: 'response' });
   }
 
-  getGameId(id: number): Observable<Game>{
-    return this.http.get<Game>(`${this.apiUrl}/${id}`)
+  obtenerVideojuegoPorId(id: number): Observable<Videojuego> {
+    return this.clienteHttp.get<Videojuego>(`${this.urlApi}/${id}`);
   }
 
-  searchGames(text: string): Observable<Game[]> {
-    return this.http.get<Game[]>(`${this.apiUrl}?title_like=${text}`);
+  buscarVideojuegosPorTitulo(titulo: string): Observable<Videojuego[]> {
+    return this.clienteHttp.get<Videojuego[]>(`${this.urlApi}?title_like=${titulo}`);
   }
 
-  getGamesByPrice(min: string, max: string): Observable<Game[]> {
-    let params = new HttpParams();
+  obtenerVideojuegosPorPrecio(minimo: string, maximo: string): Observable<Videojuego[]> {
+    let parametros = new HttpParams();
 
-    if (min) {
-      params = params.set('price_gte', min);
+    if (minimo) {
+      parametros = parametros.set('price_gte', minimo);
     }
-    if (max) {
-      params = params.set('price_lte', max);
+    if (maximo) {
+      parametros = parametros.set('price_lte', maximo);
     }
 
-    return this.http.get<Game[]>(this.apiUrl, { params });
+    return this.clienteHttp.get<Videojuego[]>(this.urlApi, { params: parametros });
   }
 }

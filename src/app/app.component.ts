@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GamesService } from './services/games.service';
-import { Game } from './models/game';
+import { CatalogoService } from './services/games.service';
+import { Videojuego } from './models/game';
 
 @Component({
   selector: 'app-root',
@@ -12,69 +12,75 @@ import { Game } from './models/game';
 export class AppComponent implements OnInit {
   title = 'proj-game';
 
-  private gamesService = inject(GamesService);
-  games: Game[] = [];
-  selectedGame: Game | null = null;
-  selectedGenre = '';
-  selectedPlatform = '';
-  currentPage = 1;
-  pageSize = 5;
-  totalItems = 0;
-  totalPages = 0;
+  private catalogoService = inject(CatalogoService);
+  videojuegos: Videojuego[] = [];
+  videojuegoSeleccionado: Videojuego | null = null;
+  generoSeleccionado = '';
+  plataformaSeleccionada = '';
+  paginaActual = 1;
+  elementosPorPagina = 5;
+  totalVideojuegos = 0;
+  totalPaginas = 0;
 
   ngOnInit(): void {
-    this.loadGames();
+    this.cargarVideojuegos();
   }
 
-  onGameId(id: string): void {
-    this.gamesService.getGameId(Number(id)).subscribe(data => {
-      this.selectedGame = data;
+  buscarVideojuegoPorId(id: string): void {
+    this.catalogoService.obtenerVideojuegoPorId(Number(id)).subscribe(videojuego => {
+      this.videojuegoSeleccionado = videojuego;
     });
   }
 
-  loadGames(): void {
-    this.gamesService.getGames(this.currentPage, this.pageSize, this.selectedGenre, this.selectedPlatform).subscribe(response => {
-      this.games = response.body ?? [];
-      this.totalItems = Number(response.headers.get('X-Total-Count') ?? 0);
-      this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+  cargarVideojuegos(): void {
+    this.catalogoService.obtenerVideojuegos(this.paginaActual, this.elementosPorPagina, this.generoSeleccionado, this.plataformaSeleccionada).subscribe(respuesta => {
+      this.videojuegos = respuesta.body ?? [];
+      this.totalVideojuegos = Number(respuesta.headers.get('X-Total-Count') ?? 0);
+      this.totalPaginas = Math.ceil(this.totalVideojuegos / this.elementosPorPagina);
     });
   }
 
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadGames();
+  irAPaginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.cargarVideojuegos();
     }
   }
 
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.loadGames();
+  irAPaginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.cargarVideojuegos();
     }
   }
 
-  onGenreChange(genre: string): void {
-    this.selectedGenre = genre;
-    this.currentPage = 1;
-    this.loadGames();
+  cambiarGenero(genero: string): void {
+    this.generoSeleccionado = genero;
+    this.paginaActual = 1;
+    this.cargarVideojuegos();
   }
 
-  onPlatformChange(platform: string): void {
-    this.selectedPlatform = platform;
-    this.currentPage = 1;
-    this.loadGames();
+  cambiarPlataforma(plataforma: string): void {
+    this.plataformaSeleccionada = plataforma;
+    this.paginaActual = 1;
+    this.cargarVideojuegos();
   }
 
-  searchByTitle(text: string): void {
-    this.gamesService.searchGames(text).subscribe(data => {
-      this.games = data;
+  cambiarElementosPorPagina(limite: string): void {
+    this.elementosPorPagina = Number(limite);
+    this.paginaActual = 1;
+    this.cargarVideojuegos();
+  }
+
+  buscarPorTitulo(titulo: string): void {
+    this.catalogoService.buscarVideojuegosPorTitulo(titulo).subscribe(videojuegos => {
+      this.videojuegos = videojuegos;
     });
   }
 
-  filterByPrice(min: string, max: string): void {
-    this.gamesService.getGamesByPrice(min, max).subscribe(data => {
-      this.games = data;
+  filtrarPorPrecio(minimo: string, maximo: string): void {
+    this.catalogoService.obtenerVideojuegosPorPrecio(minimo, maximo).subscribe(videojuegos => {
+      this.videojuegos = videojuegos;
     });
   }
 }

@@ -1,79 +1,130 @@
-<main>
-  <h1>GAME CATALOG</h1>
-
-  <section class="filters">
-    <div>
-      <label>Buscar título: </label>
-      <input #titleInput type="text">
-      <button (click)="searchByTitle(titleInput.value)">Buscar</button>
+<main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+  <header class="relative mb-8 overflow-hidden rounded-[2rem] bg-[#d9e0d1] px-6 py-9 shadow-sm sm:px-10 sm:py-12">
+    <div class="absolute -right-10 -top-20 h-72 w-72 rounded-full border-[36px] border-[#c6d0be] opacity-70" aria-hidden="true"></div>
+    <div class="relative max-w-2xl">
+      <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#45614f]">
+        <span class="h-2 w-2 rounded-full bg-[#bf6844]"></span>
+        Tu rincón de videojuegos
+      </p>
+      <h1 class="font-serif text-4xl font-bold leading-tight tracking-tight text-[#23372d] sm:text-5xl">Buenas historias.<br>Grandes partidas.</h1>
+      <p class="mt-4 max-w-xl text-base leading-7 text-[#506258]">Explora el catálogo, encuentra tu próximo favorito y vuelve a jugar.</p>
     </div>
+  </header>
 
-    <div>
-      <label>Género: </label>
-      <select #genreSelect (change)="onGenreChange(genreSelect.value)">
-        <option value="">Todos</option>
-        <option value="Action">Action</option>
-        <option value="Adventure">Adventure</option>
-        <option value="RPG">RPG</option>
-        <option value="Racing">Racing</option>
-        <option value="Simulation">Simulation</option>
-        <option value="Sports">Sports</option>
-        <option value="Strategy">Strategy</option>
-      </select>
+  <section class="mb-8 rounded-2xl border border-[#e5dfd2] bg-white p-5 shadow-[0_8px_24px_rgba(54,48,34,0.04)] sm:p-6">
+    <div class="mb-5">
+      <h2 class="font-serif text-xl font-bold text-[#26352f]">Encuentra tu juego</h2>
+      <p class="mt-1 text-sm text-[#7b8178]">Busca por título o ajusta los filtros.</p>
     </div>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div class="sm:col-span-2 xl:col-span-1">
+        <label for="titulo-juego" class="mb-2 block text-sm font-semibold text-[#46564d]">Título</label>
+        <div class="flex gap-2">
+          <input #entradaTitulo id="titulo-juego" type="text" placeholder="Ej. Pixel Runner" class="min-w-0 flex-1 rounded-xl border border-[#ded9ce] bg-[#fbfaf7] px-3 py-2.5 text-sm text-[#26352f] placeholder:text-[#a3a197] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15">
+            <button (click)="buscarPorTitulo(entradaTitulo.value)" class="rounded-xl bg-[#30483a] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#24392d] focus:outline-none focus:ring-2 focus:ring-[#59705e] focus:ring-offset-2">Buscar</button>
+        </div>
+      </div>
 
-    <div>
-      <label>Plataforma: </label>
-      <select #platformSelect (change)="onPlatformChange(platformSelect.value)">
-        <option value="">Todas</option>
-        <option value="PC">PC</option>
-        <option value="PlayStation">PlayStation</option>
-        <option value="Xbox">Xbox</option>
-        <option value="Switch">Switch</option>
-      </select>
-    </div>
+      <div>
+        <label for="genre" class="mb-2 block text-sm font-semibold text-[#46564d]">Género</label>
+        <select #filtroGenero id="genero" (change)="cambiarGenero(filtroGenero.value)" class="w-full rounded-xl border border-[#ded9ce] bg-[#fbfaf7] px-3 py-2.5 text-sm text-[#26352f] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15">
+          <option value="">Todos</option>
+          <option value="Action">Action</option>
+          <option value="Adventure">Adventure</option>
+          <option value="RPG">RPG</option>
+          <option value="Racing">Racing</option>
+          <option value="Simulation">Simulation</option>
+          <option value="Sports">Sports</option>
+          <option value="Strategy">Strategy</option>
+        </select>
+      </div>
 
-    <div>
-      <label>Precio mínimo: </label>
-      <input #minPrice type="number">
+      <div>
+        <label for="platform" class="mb-2 block text-sm font-semibold text-[#46564d]">Plataforma</label>
+        <select #filtroPlataforma id="plataforma" (change)="cambiarPlataforma(filtroPlataforma.value)" class="w-full rounded-xl border border-[#ded9ce] bg-[#fbfaf7] px-3 py-2.5 text-sm text-[#26352f] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15">
+          <option value="">Todas</option>
+          <option value="PC">PC</option>
+          <option value="PlayStation">PlayStation</option>
+          <option value="Xbox">Xbox</option>
+          <option value="Switch">Switch</option>
+        </select>
+      </div>
 
-      <label>Precio máximo: </label>
-      <input #maxPrice type="number">
+      <div>
+        <label class="mb-2 block text-sm font-semibold text-[#46564d]">Rango de precio</label>
+        <div class="flex gap-2">
+          <input #precioMinimo type="number" placeholder="Mín." aria-label="Precio mínimo" class="w-1/2 min-w-0 rounded-xl border border-[#ded9ce] bg-[#fbfaf7] px-3 py-2.5 text-sm text-[#26352f] placeholder:text-[#a3a197] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15">
+          <input #precioMaximo type="number" placeholder="Máx." aria-label="Precio máximo" class="w-1/2 min-w-0 rounded-xl border border-[#ded9ce] bg-[#fbfaf7] px-3 py-2.5 text-sm text-[#26352f] placeholder:text-[#a3a197] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15">
+          <button (click)="filtrarPorPrecio(precioMinimo.value, precioMaximo.value)" class="rounded-xl border border-[#d6d2c7] px-3 py-2.5 text-sm font-semibold text-[#46564d] transition hover:border-[#59705e] hover:bg-[#f4f6f1] focus:outline-none focus:ring-2 focus:ring-[#59705e]">Filtrar</button>
+        </div>
+      </div>
 
-      <button (click)="filterByPrice(minPrice.value, maxPrice.value)">Filtrar</button>
+      <div>
+        <label for="elementos-por-pagina" class="mb-2 block text-sm font-semibold text-[#46564d]">Mostrar</label>
+        <select #limiteSelect id="elementos-por-pagina" [value]="elementosPorPagina" (change)="cambiarElementosPorPagina(limiteSelect.value)" class="w-full rounded-xl border border-[#ded9ce] bg-[#fbfaf7] px-3 py-2.5 text-sm text-[#26352f] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15">
+          <option value="5">5 juegos</option>
+          <option value="10">10 juegos</option>
+          <option value="15">15 juegos</option>
+        </select>
+      </div>
     </div>
   </section>
 
-  <section class="games">
-    @for (game of games; track game.id) {
-      <div class="game">
-        <h3>{{ game.title }}</h3>
-        <p>{{ game.genre }} · {{ game.platform }}</p>
-        <p>{{ game.price }} €</p>
+  <div class="mb-4 flex items-end justify-between">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#9b684e]">La colección</p>
+      <h2 class="mt-1 font-serif text-2xl font-bold text-[#26352f]">Juegos para descubrir</h2>
+    </div>
+  </div>
+
+  <section class="catalogo__lista grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    @for (videojuego of videojuegos; track videojuego.id) {
+      <article class="juego group rounded-2xl border border-[#e6e0d4] bg-white p-3.5 shadow-[0_8px_24px_rgba(54,48,34,0.04)] transition duration-200 hover:-translate-y-1 hover:border-[#d3c8b3] hover:shadow-[0_16px_34px_rgba(54,48,34,0.10)]">
+        <div class="relative mb-4 flex h-36 items-center justify-center overflow-hidden rounded-xl bg-[#e8d8bd]">
+          <div class="absolute -right-4 -top-10 h-40 w-40 rounded-full border-[22px] border-[#d9c5a3]" aria-hidden="true"></div>
+          <span class="relative font-serif text-5xl font-bold text-[#725d40]" aria-hidden="true">{{ videojuego.id }}</span>
+          <span class="absolute bottom-3 left-3 rounded-full bg-white/75 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#725d40]">Selección</span>
+        </div>
+        <div class="flex items-start justify-between gap-3 px-1 pb-1">
+          <div>
+            <h3 class="juego__titulo font-serif text-lg font-bold text-[#26352f]">{{ videojuego.title }}</h3>
+            <p class="juego__meta mt-1 text-sm text-[#7b8178]">{{ videojuego.genre }} <span class="px-1 text-[#c2b9a8]">·</span> {{ videojuego.platform }}</p>
+          </div>
+          <span class="juego__precio shrink-0 rounded-lg bg-[#f5eee2] px-2.5 py-1 text-sm font-bold text-[#a75c3d]">{{ videojuego.price }} €</span>
+        </div>
+      </article>
+    } @empty {
+      <div class="col-span-full rounded-2xl border border-dashed border-[#d8d1c4] bg-white/60 px-6 py-12 text-center">
+        <p class="font-serif text-lg font-semibold text-[#26352f]">No se encontraron juegos</p>
+        <p class="mt-2 text-sm text-[#7b8178]">Prueba con otros términos o cambia los filtros.</p>
       </div>
     }
   </section>
 
-  <div class="pagination">
-    <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-    <span>Página {{ currentPage }} de {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+  <div class="catalogo__paginacion mt-6 flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#e5dfd2] bg-white/75 p-4 sm:flex-row">
+    <p class="text-sm text-[#7b8178]"><span class="font-semibold text-[#26352f]">{{ totalVideojuegos }}</span> juegos en el catálogo</p>
+    <div class="flex items-center gap-3">
+      <button (click)="irAPaginaAnterior()" [disabled]="paginaActual === 1" class="rounded-xl border border-[#d6d2c7] px-4 py-2 text-sm font-medium text-[#46564d] transition hover:border-[#59705e] hover:bg-[#f4f6f1] disabled:cursor-not-allowed disabled:opacity-40">Anterior</button>
+      <span class="min-w-28 text-center text-sm text-[#7b8178]">Página {{ paginaActual }} de {{ totalPaginas }}</span>
+      <button (click)="irAPaginaSiguiente()" [disabled]="paginaActual === totalPaginas" class="rounded-xl border border-[#d6d2c7] px-4 py-2 text-sm font-medium text-[#46564d] transition hover:border-[#59705e] hover:bg-[#f4f6f1] disabled:cursor-not-allowed disabled:opacity-40">Siguiente</button>
+    </div>
   </div>
 
-  <p>Registros encontrados: {{ totalItems }}</p>
-
-  <section class="detail">
-    <div>
-      <label>Buscar videojuego por ID: </label>
-      <input #idInput type="text">
-      <button (click)="onGameId(idInput.value)">Buscar</button>
+  <section class="catalogo__busqueda-id mt-8 rounded-2xl border border-[#e5dfd2] bg-[#e9e5d9] p-5 sm:p-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
+      <div class="flex-1">
+        <h2 class="font-serif text-xl font-bold text-[#26352f]">¿Buscas uno en particular?</h2>
+        <label for="game-id" class="mb-2 mt-1 block text-sm text-[#6d776f]">Introduce el número de identificación del juego.</label>
+        <input #entradaIdVideojuego id="id-videojuego" type="number" placeholder="ID del juego" class="w-full rounded-xl border border-[#d6d2c7] bg-white px-3 py-2.5 text-sm text-[#26352f] placeholder:text-[#a3a197] focus:border-[#59705e] focus:outline-none focus:ring-2 focus:ring-[#59705e]/15 sm:max-w-xs">
+      </div>
+      <button (click)="buscarVideojuegoPorId(entradaIdVideojuego.value)" class="rounded-xl bg-[#30483a] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#24392d] focus:outline-none focus:ring-2 focus:ring-[#59705e] focus:ring-offset-2">Buscar juego</button>
     </div>
 
-    @if (selectedGame) {
-      <div class="game">
-        <h3>{{ selectedGame.title }}</h3>
-        <p>{{ selectedGame.genre }} · {{ selectedGame.platform }}</p>
-        <p>{{ selectedGame.price }} €</p>
+    @if (videojuegoSeleccionado) {
+      <div class="juego mt-5 rounded-xl border border-[#d6d2c7] bg-white p-4">
+        <h3 class="juego__titulo font-serif font-bold text-[#26352f]">{{ videojuegoSeleccionado.title }}</h3>
+        <p class="juego__meta mt-1 text-sm text-[#7b8178]">{{ videojuegoSeleccionado.genre }} · {{ videojuegoSeleccionado.platform }}</p>
+        <p class="juego__precio mt-3 font-bold text-[#a75c3d]">{{ videojuegoSeleccionado.price }} €</p>
       </div>
     }
   </section>
