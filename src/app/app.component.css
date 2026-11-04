@@ -1,195 +1,140 @@
 main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem 4rem;
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 0 16px;
 }
 
-/* ---------- Título ---------- */
 h1 {
-  margin: 0 0 2rem;
   text-align: center;
-  font-size: 3rem;
-  font-weight: 900;
-  letter-spacing: 0.3rem;
-  background: linear-gradient(90deg, #a78bfa, #22d3ee, #f472b6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 18px rgba(167, 139, 250, 0.45));
+  color: #2c3e50;
+  margin-bottom: 24px;
 }
 
-/* ---------- Paneles ---------- */
+/* Filtros y Detalle */
 .filters,
 .detail {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 1.5rem;
+  gap: 12px 20px;
   align-items: center;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .filters div,
 .detail > div {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
   align-items: center;
+  gap: 8px;
 }
 
 label {
-  font-size: 0.8rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08rem;
-  color: #9aa3c7;
+  font-size: 0.9rem;
 }
 
-/* ---------- Inputs y selects ---------- */
 input,
 select {
-  padding: 0.55rem 0.8rem;
-  font-size: 0.95rem;
-  color: #e6e8f2;
-  background: #151a2e;
-  border: 1px solid #2a3150;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
 }
 
-input[type='number'] {
-  width: 110px;
+input[type="number"] {
+  width: 80px;
 }
 
 input:focus,
 select:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+  outline: none;
+  border-color: #3498db;
 }
 
-select {
-  cursor: pointer;
-}
-
-/* ---------- Botones ---------- */
 button {
-  padding: 0.55rem 1.2rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  background-color: #3498db;
+  color: #ffffff;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
+  padding: 7px 14px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
 }
 
 button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
+  background-color: #2980b9;
 }
 
 button:disabled {
-  opacity: 0.35;
+  background-color: #bdc3c7;
   cursor: not-allowed;
 }
 
-/* ---------- Tarjetas ---------- */
+/* Catálogo de juegos */
 .games {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
 }
 
 .game {
-  position: relative;
-  padding: 1.25rem;
-  background: linear-gradient(160deg, #1a1f38, #12162a);
-  border: 1px solid #262c4a;
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-}
-
-.game::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 4px;
-  background: linear-gradient(90deg, #7c3aed, #06b6d4, #ec4899);
-}
-
-.game:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: #8b5cf6;
-  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.35);
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
 }
 
 .game h3 {
-  margin: 0.3rem 0 0.6rem;
-  font-size: 1.15rem;
-  color: #fff;
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
 }
 
 .game p {
-  margin: 0.3rem 0;
+  margin: 4px 0;
+  color: #666;
   font-size: 0.9rem;
-  color: #9aa3c7;
 }
 
 .game p:last-child {
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #22d3ee;
-  text-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #27ae60;
 }
 
-/* ---------- Paginación ---------- */
+/* Paginación y resumen */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 .pagination span {
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
+  font-size: 0.95rem;
+  color: #555;
 }
 
 main > p {
-  margin: 1rem 0 2.5rem;
   text-align: center;
-  color: #9aa3c7;
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 12px;
 }
 
-/* ---------- Detalle por ID ---------- */
+/* Detalle */
 .detail {
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
 }
 
 .detail .game {
-  max-width: 320px;
-}
-
-@media (max-width: 600px) {
-  h1 {
-    font-size: 2rem;
-  }
+  width: 100%;
+  max-width: 300px;
+  margin-top: 12px;
 }
